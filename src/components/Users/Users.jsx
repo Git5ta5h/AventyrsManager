@@ -5,6 +5,8 @@ import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import SearchIcon from '@mui/icons-material/Search';
+import HistoryIcon from '@mui/icons-material/History';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 
@@ -13,11 +15,32 @@ const Users = () => {
     const [data, setData] = useState([]);
     const [targetedId, setTargetedId] = useState(null);
     const [changed, setChanged] = useState(false);
-    
-    const firstnameRef = useRef(null);
-    const lastnameRef = useRef(null);
+
+    const [selectedCustomerId, setSelectedCustomerId] = useState(null); 
+    const [jsonData, setJsonData] = useState([]);
+    const [firstnameVal, setfirstnameValue] = useState('');
+    const firstnameRef = useRef('');
+    const handleFNchange = (event) => {
+      const newValue = event.target.value;
+      setfirstnameValue(newValue);
+    };
+
+    const [lastnameVal, setlastnameValue] = useState('');
+    const lastnameRef = useRef('');
+    const handleLNchange = (event) => {
+      const newValue = event.target.value;
+      setlastnameValue(newValue);
+
+    };
+
+    const [teleVal, setteleValue] = useState('');
     const telephonenumberRef = useRef(null);
-    const tabRef = useRef(null);
+    const handleTelechange = (event) => {
+      const newValue = event.target.value;
+      setteleValue(newValue);
+    };
+
+    const tabRef = useRef('');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,7 +59,28 @@ const Users = () => {
     .catch(error => {
       console.error('Error fetching data:', error);
     });
+
+    const fetchOrders =  fetch('https://hi-fiprogramming.net/projects/aventyrskiosken/dbapi.php?table=Orders')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json(); // Assuming the response contains JSON data
+    })
+    .then(data => {
+      // Handle the data here
+      console.log(data);
+      setJsonData(data)
+    })
+    .catch(error => {
+      console.error('Error fetching data:', error);
+    });
+
+
     }
+
+
+
   // Fetch data initially and then at regular intervals
   fetchData();
   const intervalId = setInterval(fetchData, 10000); // Update every 10 seconds
@@ -53,26 +97,25 @@ const Users = () => {
   };
 }, [changed]);
   
-  const sendPostRequest = (data) => {
-    // SENDING DATA TO DB, RESPONSE 
-    var response ="";
-    fetch('https://hi-fiprogramming.net/projects/aventyrskiosken/newdb.php', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
+const sendPostRequest = (data) => {
+  var response = "";
+  fetch('https://hi-fiprogramming.net/projects/aventyrskiosken/newdb.php', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  }).then(console.log("Raw Response" + response))
+    .then( response => response.json())
+    .then(data => {
+      console.log("Post Response: ", data); // Handle the POST response data here
+      response = data;
     })
-      .then(response => response.json())
-      .then(data => {
-        console.log("Post Response: ", data); // Handle the POST response data here
-        response = data;
-      })
-      .catch(error => {
-        console.error('POST Error:', error);
-      });
-      return response;
-  }
+    .catch(error => {
+      console.error('POST Error:', error);
+    });
+  return response;
+}
 
   const handleElementClick = (id) =>
   {
@@ -93,10 +136,12 @@ const Users = () => {
     console.log(response);
     setChanged(true);
   };
+  const search = () =>
+  {
 
+  }
   const addClick = () =>
   {
-    console.log("Clicked");
         var fname;
         var lname;
         var tele;
@@ -108,8 +153,8 @@ const Users = () => {
         }
         else
         {
-          const label = fnTFRef.current.querySelector('.MuiInputLabel-root');
-          fname = label.textContent;
+          //const label = fnTFRef.current.querySelector('.MuiInputLabel-root');
+          fname = "UNKNOWN";
         }
 
         if(lastnameRef.current.value != "")
@@ -118,8 +163,8 @@ const Users = () => {
         }
         else
         {
-          const label = lnTFRef.current.querySelector('.MuiInputLabel-root');
-          lname = label.textContent;
+          //const label = lnTFRef.current.querySelector('.MuiInputLabel-root');
+          lname = "UNKNOWN";
         }
 
         if(telephonenumberRef.current.value != "")
@@ -128,7 +173,7 @@ const Users = () => {
         }
         else
         {
-          const label = tnTFRef.current.querySelector('.MuiInputLabel-root');
+          //const label = tnTFRef.current.querySelector('.MuiInputLabel-root');
           tele = label.textContent;
         }
 
@@ -138,8 +183,8 @@ const Users = () => {
         }
         else
         {
-          const label = tTFRef.current.querySelector('.MuiInputLabel-root');
-          tab = label.textContent;
+          //const label = tTFRef.current.querySelector('.MuiInputLabel-root');
+          tab = 0;
         }
 
         var data = {
@@ -155,27 +200,39 @@ const Users = () => {
         setChanged(true);
   };
   
- 
+  const customersOrders = (thisId) =>
+  {
+  
+  }
 
   return (
     <>
     <br></br>
     <Box sx={{border: "2px solid orange", display: "flex", flexDirection:"row", width: "60%", justifyContent: "space-between"}}>
-    <TextField id="TF_FN" label="Förnamn" inputRef={firstnameRef} variant="outlined"  />
-    <TextField id="TF_LN" label="Efternamn" inputRef={lastnameRef}  variant="outlined" />
-    <TextField id="TF_TN" label="Mobil" inputRef={telephonenumberRef} variant="outlined" />
+    <TextField id="TF_FN" label="Förnamn" value={firstnameVal} inputRef={firstnameRef} variant="outlined"  onChange={handleFNchange}/>
+    <TextField id="TF_LN" label="Efternamn" value={lastnameVal} inputRef={lastnameRef}  variant="outlined" onChange={handleLNchange}/>
+    <TextField id="TF_TN" label="Mobil" value={teleVal} inputRef={telephonenumberRef} variant="outlined" onChange={handleTelechange}/>
     <TextField id="TF_T" label="Nota" inputRef={tabRef} variant="outlined" />
+    
+    <Box>
+      {
+      firstnameRef.current.value=='' && lastnameRef.current.value=='' && telephonenumberRef.current.value==''?
+      <SearchIcon sx={{color:"white",background:"grey", height:"100%"}}/>:
+      <SearchIcon sx={{color:"blue",background:"grey", height:"100%"}}/>
+      }
+      </Box>
       <Box>
-      <Link to={`.`}>
-      <Button onClick={addClick} variant="contained" sx={{ height: '40px', alignSelf: 'center', mt: 2 }}>
-      <AddIcon />
-      </Button>
-      </Link>
+        <Link to={`.`}>
+        <Button onClick={addClick} variant="contained" sx={{ height: '100%', alignSelf: 'center', mt: 0 }}>
+        <AddIcon />
+        </Button>
+        </Link>
       </Box>
     </Box>
+
     <br></br>
     <Box sx={{border: "2px solid orange", width: "60%"}}>
-        {data.map((customer) => (
+        {data.map((customer) => customer.Firstname.toLowerCase().includes(firstnameRef.current.value.toLowerCase()) && customer.Lastname.toLowerCase().includes(lastnameRef.current.value.toLowerCase()) && customer.Telephone_Number.includes(telephonenumberRef.current.value)?
             <Box key={customer.Customer_Id}>
                 <Box sx={{border: "2px solid orange", display: "flex", flexDirection:"row", width: "100%", justifyContent: "space-between"}}>
                     <Box sx={{display: "flex", flexDirection: "column"}}>
@@ -190,21 +247,36 @@ const Users = () => {
                     <Typography variant="h1" component="h1">Nota: {customer.Tab} Kr</Typography>
                     </Box>
                     <Box>
+                   
+                      <Button onClick={() => setSelectedCustomerId(customer.Customer_Id)} variant="contained" sx={{ height: '100%', alignSelf: 'center', mt: 0 }}>
+                    <HistoryIcon/>
+                    </Button>
+                    
+                    
                       <Link to={`/edit_user/${customer.Customer_Id}`}>
-                      <Button onClick={() => handleElementClick(customer.Customer_Id)} variant="contained" sx={{ height: '40px', alignSelf: 'center', mt: 2 }}>
+                      <Button onClick={() => handleElementClick(customer.Customer_Id)} variant="contained" sx={{ height: '100%', alignSelf: 'center', mt: 0 }}>
                     <EditIcon />
                     </Button>
                     </Link>
                     <Link to={`.`}>
-                      <Button onClick={() => removeClick(customer.Customer_Id)} color="error" variant="contained" sx={{ height: '40px', alignSelf: 'center', mt: 2 }}>
+                      <Button onClick={() => removeClick(customer.Customer_Id)} color="error" variant="contained" sx={{ height: '100%', alignSelf: 'center', mt: 0 }}>
                     <DeleteIcon />
                     </Button>
                     </Link>
                     </Box>
+                    
                 </Box>
-            </Box>
-                ))}
-                
+                {selectedCustomerId === customer.Customer_Id?
+                <Box>
+                  {jsonData.map((order) => selectedCustomerId === order.Customer_Id?
+                    <Box key={order.Customer_Id}>
+                      {order.Summary + order.Created}
+                    </Box> :null
+                  )}
+                  </Box> : null} 
+            </Box>:null
+                )}
+
     </Box>
     </>
   )

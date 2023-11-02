@@ -9,8 +9,6 @@ import Box from '@mui/material/Box';
 
 
 const Edit_User = () => {
-
-  
     const firstnameRef = useRef(null);
     const lastnameRef = useRef(null);
     const telephonenumberRef = useRef(null);
@@ -43,6 +41,8 @@ const Edit_User = () => {
     
       }, []); 
 
+      
+      // USED TO BE WITHIN useEffect, move back if not working.
       const sendPostRequest = (data) => {
         // SENDING DATA TO DB, RESPONSE 
         var response ="";
@@ -62,8 +62,7 @@ const Edit_User = () => {
             console.error('POST Error:', error);
           });
           return response;
-      }
-
+        }
 
       const handleClick = () =>
       {

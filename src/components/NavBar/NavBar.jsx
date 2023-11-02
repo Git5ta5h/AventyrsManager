@@ -3,28 +3,53 @@ import { Link } from "react-router-dom";
 import Button from '@mui/material/Button';
 import Typography from "@mui/material/Typography";
 import Box from '@mui/material/Box';
+import { ToastContainer, toast } from 'react-toastify';
 
-const NavBar = () => {
-  return (
-    <Box sx={{width: "60%", border:"2px solid green", padding: 1}}>
-    <Stack  direction="row" sx={{justifyContent: "space-between", alignItems:"center"}}>
-      <Stack direction="row" sx={{width:"20%", justifyContent:"space-around"}}>
+const NavItem = ({ to, text }) => (
+  <Link to={to} style={{ textDecoration: 'none' }}>
+    <Typography variant="h1" component="h1">
+      {text}
+    </Typography>
+  </Link>
+);
+
+const NavBar = ({ isAuthenticated, onLogout }) => {
+  return isAuthenticated ? (<Box  sx={{
+    width: '100%',
+    backgroundColor: 'lightblue', // Set a background color for the entire navigation bar
+    padding: 2,
+  }}>
+    <Stack  direction="row"
+        sx={{
+          justifyContent: 'center', // Center the elements horizontally
+          alignItems: 'center',    // Center the elements vertically
+          width: '80%',
+          margin: '0 auto',
+        }}>
+       <Stack direction="row" spacing={5}>
         <Link to="/orders"  style={{ textDecoration: 'none' }}> <Typography
               variant="h1"
               component="h1">Beställningar</Typography></Link>
-        <Link to="/users"style={{ textDecoration: 'none' }}><Typography
-              variant="h1"
-              component="h1">Användare</Typography></Link>
         <Link to="/menu"style={{ textDecoration: 'none' }}><Typography
               variant="h1"
               component="h1">Meny</Typography></Link>
+        <Link to="/users"style={{ textDecoration: 'none' }}><Typography
+              variant="h1"
+              component="h1">Användare</Typography></Link>
+        <Link to="/statistics"style={{ textDecoration: 'none' }}><Typography
+              variant="h1"
+              component="h1">Statistik</Typography></Link>
       </Stack>
       <Stack>
-        <Button variant="contained">LOG IN</Button>
+        <Link to="/">
+        <Button variant="contained" onClick={onLogout}>LOG OUT</Button>
+        </Link>
       </Stack>
     </Stack>
+    <ToastContainer position="top-right" autoClose={3000} />
     </Box>
-  )
+    ) : null;
+  
 }
 
-export default NavBar
+export default NavBar;
