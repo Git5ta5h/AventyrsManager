@@ -6,10 +6,12 @@ import EditIcon from '@mui/icons-material/Edit';
 import ShoppingCart from '@mui/icons-material/ShoppingCart';
 import RemoveShoppingCart from '@mui/icons-material/RemoveShoppingCart';
 import Box from '@mui/material/Box';
-
+import socketIOClient from 'socket.io-client';
 
 
 const Menu = () => {
+  const serverEndpoint = 'http://localhost:5175';
+  const socket = socketIOClient(serverEndpoint);
     const [data, setData] = useState([]);
     const [targetedId, setTargetedId] = useState(null);
     const [changed, setChanged] = useState(false);
@@ -72,6 +74,28 @@ const Menu = () => {
     return response;
   }
 
+  useEffect(() => {
+    // Listen for notifications from the server
+    socket.on('notification', (data) => {
+      console.log('Customer Received notification from the server:', data);
+    });
+
+    return () => {
+      socket.disconnect(); // Clean up the socket connection when the component unmounts
+    };
+  }, []);
+
+
+  const sendUpdateItemsPrompt = () =>
+  {
+    console.log("send-prompt function called");
+    socket.emit('updateItemsPrompt', '');
+  }
+  const deleteData = () => 
+  {
+    resetBasket();
+  }
+
   const handleElementClick = (id) =>
   {
     setTargetedId(id); // Set the targetedId when the element is clicked
@@ -120,8 +144,8 @@ const Menu = () => {
                     </Button>
                     </Link>
                       {item.Available == show ?
-                      <Button variant="contained" color="error" onClick={() => handledClick(item.Item_Id, "UNAVAILABLE")} sx={{height: "100%", alignSelf:"bottom"}}><RemoveShoppingCart/></Button>:
-                      <Button variant="contained" onClick={() => handledClick(item.Item_Id, "AVAILABLE")} sx={{height: "100%", alignSelf:"bottom"}}><ShoppingCart/></Button>
+                      <Button variant="contained" color="error" onClick={() => {sendUpdateItemsPrompt() , handledClick(item.Item_Id, "UNAVAILABLE")}} sx={{height: "100%", alignSelf:"bottom"}}><RemoveShoppingCart/></Button>:
+                      <Button variant="contained" onClick={() => {sendUpdateItemsPrompt() , handledClick(item.Item_Id, "AVAILABLE")}} sx={{height: "100%", alignSelf:"bottom"}}><ShoppingCart/></Button>
                       }
                     </Box>
                 </Box>
