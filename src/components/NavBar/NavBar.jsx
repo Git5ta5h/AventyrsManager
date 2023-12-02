@@ -16,27 +16,32 @@ const NavItem = ({ to, text }) => (
 const NavBar = ({ isAuthenticated, onLogout }) => {
   return isAuthenticated ? (<Box  sx={{
     width: '100%',
-    backgroundColor: 'lightblue', // Set a background color for the entire navigation bar
-    padding: 2,
+    backgroundColor: '#C38370', // Set a background color for the entire navigation bar
+    padding: 2, mb: 2, display: "flex", justifyContent:"center", alignItems:"center"
   }}>
     <Stack  direction="row"
         sx={{
-          justifyContent: 'center', // Center the elements horizontally
+          "@media screen and (max-width: 550px)": {width: '95%'},
+          justifyContent: 'space-between', // Center the elements horizontally
           alignItems: 'center',    // Center the elements vertically
           width: '80%',
           margin: '0 auto',
         }}>
        <Stack direction="row" spacing={5}>
         <Link to="/orders"  style={{ textDecoration: 'none' }}> <Typography
+         sx={{"@media screen and (max-width: 550px)": {fontSize: 20}}}
               variant="h1"
               component="h1">Beställningar</Typography></Link>
         <Link to="/menu"style={{ textDecoration: 'none' }}><Typography
+        sx={{"@media screen and (max-width: 550px)": {fontSize: 20}}}
               variant="h1"
               component="h1">Meny</Typography></Link>
         <Link to="/users"style={{ textDecoration: 'none' }}><Typography
+        sx={{"@media screen and (max-width: 550px)": {fontSize: 20}}}
               variant="h1"
               component="h1">Användare</Typography></Link>
         <Link to="/statistics"style={{ textDecoration: 'none' }}><Typography
+        sx={{"@media screen and (max-width: 550px)": {fontSize: 20}}}
               variant="h1"
               component="h1">Statistik</Typography></Link>
       </Stack>

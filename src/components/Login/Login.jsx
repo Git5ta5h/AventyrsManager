@@ -91,12 +91,12 @@ const Login = ({ onLogin }) => {
       };
 
   return (
-    <Box sx={{ display:"flex", flexDirection:"column", justifyContent:"center", alignItems:"center", minHeight:"100vh", width: "60%"}}>
-          <form onSubmit={handleSubmit}>
-        <FormControl sx={{width: "100%", height: "450px", display:"flex", flexDirection:"column", justifyContent:"center", border:"2px solid green", borderRadius:"10px"}}>
+    <Box sx={{  display:"flex", flexDirection:"column", justifyContent:"center", alignItems:"center", height:"100vh", width: "95%"}}>
+          <form onSubmit={handleSubmit}  style={{width:"90%"}}>
+        <FormControl sx={{width: "100%", height: "100%", display:"flex", flexDirection:"column", justifyContent:"center", border:"0.125rem solid #C38370", borderRadius:"0.625rem"}}>
             <TextField sx={{m: 2}} name="Username" label="Användarnamn" value={formData.Username} onChange={handleChange}/>
             <TextField sx={{m: 2}} name="Password" label="Lösenord" value={formData.Password} onChange={handleChange} type={"password"}/>
-            <Button type="submit" variant="contained" sx={{ m: 2, p: 1 }}>Logga in</Button>
+            <Button type="submit" variant="contained" sx={{ m: 2, p: 1 }} onClick={handleSubmit}><Typography variant="h2" sx={{color: "#F6EEE0"}}>Logga in</Typography></Button>
             {response ? <Typography sx={{color:"red", alignSelf:"center", fontWeight:"700"}}>Fel namn eller lösenord</Typography> : null}
         </FormControl>
         </form>

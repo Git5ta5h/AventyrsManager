@@ -14,6 +14,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+import { Button } from '@mui/material';
 
 ChartJS.register(
   Title,
@@ -92,7 +93,7 @@ const Statistics = () => {
   }, [changed]);
 
   const pageStyle = {
-    width: '60%',
+    width: '90%',
     height: '60%',
     display: 'flex',
     justifyContent: 'center',
@@ -196,10 +197,11 @@ const Statistics = () => {
         <Bar data={dataP} options={options} />
       </div>
   
-      <Box sx={{width: '100%', height: '100%', border: '2px solid black', marginTop: '10px', display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}>
-        <Box> <button onClick={exportToPDF}>Exportera PDF</button></Box>
-        <Box> <button onClick={clearSales}>Rensa försälnings-statistik</button></Box>
-        <Box> <button onClick={clearCustomers}>Rensa användare</button></Box>
+      <Box sx={{width: '100%', height: '100%', border: '2px solid black', marginTop: '10px', display: 'flex', flexDirection: 'row', flexWrap: 'wrap', m: 1 }}>
+        <Box sx={{width: '100%', display:"flex", justifyContent:"space-around", p: 1}}> 
+          <button onClick={exportToPDF}>Exportera PDF</button>
+        <button onClick={clearSales}>Rensa försälnings-statistik</button>
+        <button onClick={clearCustomers}>Rensa användare</button></Box>
       <table style={{ borderCollapse: 'collapse' , width: '100%'}}>
       <thead>
         <tr>

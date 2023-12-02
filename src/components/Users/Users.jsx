@@ -207,8 +207,7 @@ const sendPostRequest = (data) => {
 
   return (
     <>
-    <br></br>
-    <Box sx={{border: "2px solid orange", display: "flex", flexDirection:"row", width: "60%", justifyContent: "space-between"}}>
+    <Box sx={{width: "80%", display: "flex", flexWrap:"wrap", flexDirection:"row", justifyContent: "space-between"}}>
     <TextField id="TF_FN" label="Förnamn" value={firstnameVal} inputRef={firstnameRef} variant="outlined"  onChange={handleFNchange}/>
     <TextField id="TF_LN" label="Efternamn" value={lastnameVal} inputRef={lastnameRef}  variant="outlined" onChange={handleLNchange}/>
     <TextField id="TF_TN" label="Mobil" value={teleVal} inputRef={telephonenumberRef} variant="outlined" onChange={handleTelechange}/>
@@ -217,8 +216,8 @@ const sendPostRequest = (data) => {
     <Box>
       {
       firstnameRef.current.value=='' && lastnameRef.current.value=='' && telephonenumberRef.current.value==''?
-      <SearchIcon sx={{color:"white",background:"grey", height:"100%"}}/>:
-      <SearchIcon sx={{color:"blue",background:"grey", height:"100%"}}/>
+      <Button variant="contained"  sx={{ height: '100%', alignSelf: 'center', mt: 0 }}><SearchIcon sx={{color:"white"}}/></Button>:
+      <Button variant="contained"  sx={{ height: '100%', alignSelf: 'center', mt: 0 }}><SearchIcon sx={{color:"blue"}}/></Button>
       }
       </Box>
       <Box>
@@ -231,22 +230,22 @@ const sendPostRequest = (data) => {
     </Box>
 
     <br></br>
-    <Box sx={{border: "2px solid orange", width: "60%"}}>
+    <Box sx={{ width: "90%"}}>
         {data.map((customer) => customer.Firstname.toLowerCase().includes(firstnameRef.current.value.toLowerCase()) && customer.Lastname.toLowerCase().includes(lastnameRef.current.value.toLowerCase()) && customer.Telephone_Number.includes(telephonenumberRef.current.value)?
             <Box key={customer.Customer_Id}>
-                <Box sx={{border: "2px solid orange", display: "flex", flexDirection:"row", width: "100%", justifyContent: "space-between"}}>
-                    <Box sx={{display: "flex", flexDirection: "column"}}>
+                <Box sx={{"@media screen and (max-width: 550px)": {flexDirection:"column"}, m: 1, border:"0.125rem solid #C38370", borderRadius:"0.625rem", display: "flex", flexDirection:"row", width: "100%", justifyContent: "space-between"}}>
+                    <Box sx={{display: "flex", flexDirection: "column", p: 1}}>
                         <Typography variant="h1" component="h1">ID: {customer.Customer_Id}</Typography>
                         <Typography variant="h1" component="h1">Namn: {customer.Firstname}</Typography>
                         <Typography variant="h1" component="h1">Efternamn: {customer.Lastname}</Typography>
                     </Box>
-                    <Box>
+                    <Box sx={{p: 1}}>
                     <Typography variant="h1" component="h1">Telefon: {customer.Telephone_Number}</Typography>
                     </Box>
-                    <Box>
+                    <Box sx={{p: 1}}>
                     <Typography variant="h1" component="h1">Nota: {customer.Tab} Kr</Typography>
                     </Box>
-                    <Box>
+                    <Box sx={{p: 1}}>
                    
                       <Button onClick={() => setSelectedCustomerId(customer.Customer_Id)} variant="contained" sx={{ height: '100%', alignSelf: 'center', mt: 0 }}>
                     <HistoryIcon/>

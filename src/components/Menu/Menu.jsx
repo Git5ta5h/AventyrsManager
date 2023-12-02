@@ -116,28 +116,27 @@ const Menu = () => {
 
   const styleAvailable =
   {
-    display: "flex", flexDirection:"row", width: "100%", justifyContent: "space-between", align: "center", border:"2px solid gray", borderRadius:"10px"
-  };
+    display: "flex", flexDirection:"row", width: "100%", justifyContent: "space-between", align: "center", border:"0.125rem solid #C38370", borderRadius:"0.625rem"}
   const styleUnavailable =
   {
-    display: "flex", flexDirection:"row", width: "100%", justifyContent: "space-between", align: "center", border:"2px solid gray", borderRadius:"10px", backgroundColor: "lightgrey"
+    display: "flex", flexDirection:"row", width: "100%", justifyContent: "space-between", align: "center", border:"0.125rem solid #C38370", borderRadius:"0.625rem", backgroundColor: "lightgrey"
   };
 
   return (
     <>
-    <Box sx={{border: "2px solid orange", width: "90%", mt: 2, mb: 3, pt: 1}}>
+    <Box sx={{width: "90%", mt: 2, mb: 3, pt: 1}}>
         {data.map((item) => 
-             <Box key={item.Item_Id} sx={{ width: "100%", display:"flex", flexDirection: "column", alignItems: "center"}}>
+             <Box key={item.Item_Id} sx={{ width: "100%", display:"flex", flexDirection: "column", alignItems: "center", justifyContent:"center", m:1}}>
                 <Box sx= {  item.Available == show ? styleAvailable:styleUnavailable}> 
-                    <Box component="img" src={item.Image_path} sx={{width: "10rem", height:"7rem", borderRadius: "10px", objectFit:"fill", border:"2px solid gray"}}/>
-                    <Box sx={{display: "flex", flexDirection: "column", width: "250px", ml: 1}}>
+                    <Box component="img" src={item.Image_path} sx={{width: "10rem", height:"7rem", objectFit:"fill", border:"0.125rem solid #C38370", borderRadius:"0.625rem"}}/>
+                    <Box sx={{display: "flex", flexDirection: "column", width: "250px", m: 1}}>
                         <Typography variant="h1" component="h1">{item.Name}</Typography>
                         <Typography variant="h2" component="h3">{item.Type}</Typography>
                         <Typography variant="h3" component="h3">{item.Description}</Typography>
-                        <Typography variant="h2" component="h2">{item.Price}</Typography>
+                        <Typography variant="h2" component="h2">{item.Price} kr</Typography>
                         <Typography variant="h2" component="h2">{item.Customize}</Typography>
                     </Box>
-                    <Box>
+                    <Box sx={{display: "flex", flexDirection:"row"}}>
                     <Link to={`/edit_item/${item.Item_Id}`}>
                       <Button onClick={() => handleElementClick(item.Item_Id)} variant="contained" sx={{ height: '100%', alignSelf: 'center', mt: 0 }}>
                     <EditIcon />

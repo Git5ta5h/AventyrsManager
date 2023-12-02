@@ -101,37 +101,36 @@ const Orders = () => {
 
   return (
     <>
-      <br></br>
-     
-      <Box sx={{width: "60%"}}>
-          <Button onClick={() => setShow(0)} variant="contained" sx={{ height: '100%', alignSelf: 'center', mt: 0 }}>
-            <h2>NYA</h2>
+
+      <Box sx={{width: "90%"}}>
+          <Button onClick={() => setShow(0)} variant="contained" sx={{ backgroundColor: (theme) => theme.palette.primary.main, height: '100%', alignSelf: 'center', m: 2 }}>
+          <Typography variant="h2" sx={{color: "#F6EEE0"}}>NYA</Typography>
         </Button>
-        <Button onClick={() => setShow(1)} variant="contained" sx={{ color: "white", background: "grey", height: '100%', alignSelf: 'center', mt: 0 }}>
-            <h2>HANTERADE</h2>
+        <Button onClick={() => setShow(1)} variant="contained" sx={{ backgroundColor: (theme) => theme.palette.secondary.main, height: '100%', alignSelf: 'center', m:2, '&:hover': {backgroundColor: (theme) => theme.palette.secondary.main} }}>
+          <Typography variant="h2" sx={{color: "#F6EEE0"}}>HANTERADE</Typography>
         </Button>
       </Box>
       
-      <Box style={{ whiteSpace: 'pre-line' }} sx={{ border: "4px solid blue", width: "60%" }}>
+      <Box style={{ }} sx={{ width: "90%" }}>
         {data.map((order) => order.handled == show ?
             <Box style={{ whiteSpace: 'pre-line' }} key={order.Order_Id}>
-              <Box style={{ whiteSpace: 'pre-line' }} sx={{ border: "2px solid orange", justifyContent: "space-between" }}>
-                <Box style={{ whiteSpace: 'pre-line' }} sx={{ display: "flex", flexDirection: "column" }}>
-                  <Typography variant="h1" component="h1">ID: {order.Order_Id}</Typography>
-                  <Typography variant="h1" component="h1">Namn: {order.Customer_Fname}</Typography>
-                  <Typography variant="h1" component="h1">Efternamn: {order.Customer_Lname}</Typography>
-                  <Box style={{ whiteSpace: 'pre-line' }} sx={{ border: "2px solid orange" }}>
-                    <Typography style={{ whiteSpace: 'pre-line' }} variant="h1" component="h1">Sammanfattning: {summaryOrganize(order.Summary)}</Typography>
+              <Box style={{ whiteSpace: 'pre-line' }} sx={{ border:"0.125rem solid #C38370", borderRadius:"0.625rem", justifyContent: "space-between" }}>
+                <Box style={{ whiteSpace: 'pre-line' }} sx={{ display: "flex", flexDirection: "column", m: 1, pt:1 }}>
+                  <Typography variant="h2" component="h2">ID: {order.Order_Id}</Typography>
+                  <Typography variant="h2" component="h2">Namn: {order.Customer_Fname}</Typography>
+                  <Typography variant="h2" component="h2">Efternamn: {order.Customer_Lname}</Typography>
+                  <Box style={{ whiteSpace: 'pre-line' }} sx={{ border:"0.125rem solid #C38370", borderRadius:"0.625rem", m: 1 }}>
+                    <Typography style={{ whiteSpace: 'pre-line' }} sx={{m: 1}} variant="h1" component="h1"><Typography  variant="h1" component="h1" sx={{fontSize: 24}}>Sammanfattning: {summaryOrganize(order.Summary)}</Typography></Typography>
                   </Box>
                   <Box>
-                    <Typography variant="h1" component="h1">Beställd: { modDate(order) }</Typography>
+                    <Typography variant="h2" component="h2" sx={{fontSize: 22, color: '#1D2026'}}>Beställd: { modDate(order) }</Typography>
                   </Box>
                   <Box>
-                    <Typography variant="h1" component="h1">Kommentar: {order.Comment}</Typography>
-                    <Typography variant="h1" component="h1">Plats: {order.Seat}</Typography>
+                    <Typography variant="h2" component="h2" sx={{fontSize: 22, color: '#1D2026'}}>Kommentar: {order.Comment}</Typography>
+                    <Typography variant="h2" component="h2" sx={{fontSize: 22, color: '#1D2026'}}>Plats: {order.Seat}</Typography>
                   </Box>
-                  <Box sx={{ border: "2px solid orange" }} >
-                    <Typography variant="h1" component="h1">Summa: {order.Total} kr</Typography>
+                  <Box sx={{ border:"0.125rem solid #C38370", borderRadius:"0.625rem", m: 1 }} >
+                    <Typography variant="h2" component="h2" sx={{fontSize: 26, fontWeight: 600, color: '#1D2026'}}>Summa: {order.Total} kr</Typography>
                   </Box>
                   {show == 0 ? (
                       <Box sx={{ display: "flex", width: "100%" }}>
