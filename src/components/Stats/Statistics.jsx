@@ -201,7 +201,7 @@ const Statistics = () => {
         <Box sx={{width: '100%', display:"flex", justifyContent:"space-around", p: 1}}> 
           <button onClick={exportToPDF}>Exportera PDF</button>
         <button onClick={clearSales}>Rensa försälnings-statistik</button>
-        <button onClick={clearCustomers}>Rensa användare</button></Box>
+        <button disabled="disabled" onClick={clearCustomers}>Rensa användare</button></Box>
       <table style={{ borderCollapse: 'collapse' , width: '100%'}}>
       <thead>
         <tr>
